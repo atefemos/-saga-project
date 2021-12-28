@@ -6,27 +6,21 @@ import { getUsers } from "../redux/actions/users";
 const Users = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
+  const loading = useSelector((state) => state.users.loading);
+  const error = useSelector((state) => state.users.error);
 
   useEffect(() => {
-    dispatch(
-      getUsers([
-        {
-          id: 1,
-          name: "Atefe Moslemi",
-          company: {
-            name: "Bithome",
-            catchPrase: "some",
-          },
-        },
-      ])
-    );
+    dispatch(getUsers());
+    console.log(users);
   }, []);
 
   return (
     <>
+      {loading && <p>Loading ... </p>}
       {users.length > 0 &&
         users.map((item) => <Cart user={item} key={item.id} />)}
-      {users.length === 0 && <p>No users available.</p>}
+      {users.length === 0 && !loading && <p>No users available.</p>}
+      {error && !loading && <p>{error}</p>}
     </>
   );
 };

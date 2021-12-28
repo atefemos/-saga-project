@@ -1,10 +1,6 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { all } from "redux-saga/effects";
+import userSaga from "./usersSaga";
 
-const apiUrl = "https://jsonplaceholder.typicode.com/users";
-
-function getApi() {
-  return fetch(apiUrl, {
-    method: "GET",
-    headers: {},
-  });
+export default function* rootSaga() {
+  yield all([userSaga()]);
 }
